@@ -1,0 +1,687 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <style>
+.card{
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+</style>
+ 
+<style>
+
+.dashboard-card{
+    border-radius:20px;
+    transition:0.3s;
+    color:white;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0px 10px 25px rgba(0,0,0,.3);
+}
+
+.card-number{
+    font-size:34px;
+    font-weight:bold;
+}
+
+.card-title{
+    font-size:18px;
+}
+
+.gradient-blue{
+    background:linear-gradient(135deg,#2193b0,#6dd5ed);
+}
+
+.gradient-green{
+    background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+.gradient-orange{
+    background:linear-gradient(135deg,#ff8008,#ffc837);
+}
+
+.gradient-red{
+    background:linear-gradient(135deg,#cb2d3e,#ef473a);
+}
+
+.gradient-purple{
+    background:linear-gradient(135deg,#7b4397,#dc2430);
+}
+
+.gradient-dark{
+    background:linear-gradient(135deg,#232526,#414345);
+}
+
+</style>
+
+<div class="container mt-0">
+
+    <div class="text-center">
+
+        <h2 class="fw-bold text-primary">
+            Hospital Management System
+        </h2>
+
+        <p class="text-muted">
+            Smart Patient & Billing Management Dashboard
+        </p>
+
+<div class="row mt-3 mb-4">
+
+</div>
+
+    </div>
+
+</div>
+
+<div class="container mt-3">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-body bg-primary text-white rounded">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+
+                    <h2 class="fw-bold">
+                        👋 Welcome, {{ username }}
+                    </h2>
+
+                    <h5 class="mt-2">
+                        🏥 City Care Hospital Management System
+                    </h5>
+
+                    <p class="mb-0">
+                        Manage Patients • Doctors • Billing • AI Prediction
+                    </p>
+
+                </div>
+
+                <div class="col-md-4 text-end">
+
+                    <h4>
+                        📅 {{ current_date }}
+                    </h4>
+
+                    <h4>
+                        🕒 <span id="clock"></span>
+                    </h4>
+
+                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container mt-4">
+
+    <div class="row mb-4">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-primary text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Total Patients</h6>
+ 
+                            <h2>{{ total_patients }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-people-fill" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-success text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Total Revenue</h6>
+
+                            <h2>₹ {{ total_revenue }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-cash-stack" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-info text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                             <h6>Daily Bills</h6>
+
+                            <h2>{{ total_bills }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-receipt-cutoff" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-warning">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Average Age</h6>
+
+                            <h2>{{ average_age }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-person-vcard-fill" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-danger text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Today's Admissions</h6>
+
+                            <h2>{{ daily_admissions }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-calendar-check-fill" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-secondary text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Total Beds</h6>
+
+                            <h2>{{ total_beds }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-building" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-dark text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Occupied Beds</h6>
+
+                            <h2>{{ occupied_beds }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-hospital" style="font-size:55px;"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card border-0 shadow rounded-4 bg-info text-white">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <h6>Available Beds</h6>
+
+                            <h2>{{ available_beds }}</h2>
+
+                        </div>
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill" style="font-size:55px;"></i>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+</div>
+
+<div class="card shadow-lg border-0 mb-4">
+
+    <div class="card-body text-center text-white rounded"
+         style="background:linear-gradient(135deg,#1e3c72,#2a5298);">
+
+        <h2 class="fw-bold mb-3">
+            🤖 AI Patient Prediction
+        </h2>
+
+        <h1 class="display-3 fw-bold">
+            {{ predicted_patients }}
+        </h1>
+
+        <h4 class="mt-3">
+            Expected Patients Tomorrow
+        </h4>
+
+        <hr class="bg-white">
+
+        <p class="fs-5">
+            Prediction generated using Machine Learning Model
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+           <div class="alert alert-success">
+               {{ messages[0] }}
+           </div>
+      {% endif %}
+    {% endwith %}
+
+    <hr>
+
+<h3 class="text-center mb-4">
+    📊 Hospital Dashboard
+</h3>
+
+<div class="row g-4">
+
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h5>📊 Department-wise Patients</h5>
+            </div>
+
+            <div class="card-body">
+                <canvas id="departmentChart" height="220"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h5>🥧 Disease-wise Patients</h5>
+            </div>
+
+            <div class="card-body">
+                <canvas id="diseaseChart" height="220"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white text-center">
+                    <h4>👨‍⚕️ Doctor-wise Patients</h4>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="doctorChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mt-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-calendar-check-fill"></i>
+                   Today's Appointments
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in today_appointments %}
+                        <tr>
+                            <td>{{ a[0] }}</td>
+                            <td>{{ a[1] }}</td>
+                            <td>{{ a[2] }}</td>
+                            <td>
+                                <span class="badge bg-primary">
+                                    {{ a[3] }}
+                                </span>
+                           </td>
+                        </tr>
+                             {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-people-fill"></i> Recent Patients
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Disease</th>
+                            <th>Doctor</th>
+                            <th>Admission Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patient in recent_patients %}
+                        <tr>
+                            <td>{{ patient[0] }}</td>
+                            <td>{{ patient[1] }}</td>
+                            <td>{{ patient[2] }}</td>
+                            <td>{{ patient[3] }}</td>
+                            <td>{{ patient[4] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mt-4">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">
+                <i class="bi bi-bell-fill"></i> Notifications
+            </h5>
+        </div>
+
+        <div class="card-body">
+            {% if notifications %}
+            {% for n in notifications %}
+            <div class="alert alert-success mb-2">
+                <strong>
+                    {{ n[2] }}
+                </strong>
+
+                <br>{{ n[1] }}<br>
+
+                <small class="text-muted">
+                    {{ n[3] }}
+                </small>
+            </div>
+                {% endfor %}
+                {% else %}
+                    <p class="text-muted">No Notifications</p>
+                        {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+<br><br>
+
+    <div class="card shadow-lg p-4">
+
+<div class="text-center mt-4">
+
+    <a href="/register" class="btn btn-primary btn-lg">
+        ➕ Register New Patient
+    </a>
+
+</div>
+
+
+        <div class="mt-4 text-center">
+
+            <a href="/dashboard" class="btn btn-secondary">
+                🔄 Refresh Dashboard
+            </a>
+        </div>
+
+    </div>
+    
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    🏥 City Care Hospital
+                </div>
+
+                <div>
+                    © 2026 | Dhiraj Bhamburkar
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Department Chart
+const deptCtx = document.getElementById("departmentChart");
+
+new Chart(deptCtx, {
+    type: "bar",
+    data: {
+        labels: JSON.parse('{{ department_labels|tojson|safe }}'),
+        datasets: [{
+            label: "Patients",
+            data: JSON.parse('{{ department_values|tojson|safe }}')
+        }]
+    },
+    options: {
+    responsive: true,
+    maintainAspectRatio: false
+}
+});
+
+// Disease Chart
+const diseaseCtx = document.getElementById("diseaseChart");
+
+new Chart(diseaseCtx, {
+    type: "pie",
+    data: {
+        labels: JSON.parse('{{ disease_labels|tojson|safe }}'),
+        datasets: [{
+            data: JSON.parse('{{ disease_values|tojson|safe }}')
+        }]
+    },
+    options: {
+    responsive: true,
+    maintainAspectRatio: false
+}
+});
+
+// Doctor Chart
+// Doctor Chart
+
+const doctorCtx = document.getElementById("doctorChart");
+
+new Chart(doctorCtx, {
+    type: "bar",
+    data: {
+        labels: JSON.parse('{{ doctor_labels|tojson|safe }}'),
+        datasets: [{
+            label: "Patients",
+            data: JSON.parse('{{ doctor_values|tojson|safe }}'),
+            backgroundColor: [
+                "#4e73df",
+                "#1cc88a",
+                "#36b9cc",
+                "#f6c23e",
+                "#e74a3b"
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+</script>
+
+<script>
+function updateClock() {
+
+    const now = new Date();
+
+    let time = now.toLocaleTimeString();
+
+    document.getElementById("clock").innerHTML = time;
+
+}
+
+setInterval(updateClock, 1000);
+
+updateClock();
+</script>
+{% endblock %}

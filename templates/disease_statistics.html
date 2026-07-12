@@ -1,0 +1,226 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        🦠 Disease Statistics Dashboard
+    </h2>
+
+    <button class="btn btn-primary mb-3"
+            onclick="generateDiseaseReport()">
+
+        🤖 Generate Disease Report
+
+    </button>
+
+    <a href="/reports" class="btn btn-secondary mb-3">
+        ← Go Back
+    </a>
+                <div class="alert alert-info">
+
+                   Click the button to generate the Report.
+
+
+                </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <div class="card bg-danger text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Disease Cases</h5>
+
+                    <h2 id="totalCases">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Most Common Disease</h5>
+
+                    <h3 id="commonDisease">-</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <h4>📊 Disease Distribution</h4>
+
+            <canvas id="diseaseChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4>📋 Disease Statistics</h4>
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Disease</th>
+
+                        <th>Total Patients</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="diseaseTable">
+
+                </tbody>
+
+            </table>
+
+            <hr>
+
+            <h4>🤖 AI Disease Analysis</h4>
+
+            <div id="aiReport">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+let diseaseChart = null;
+
+function generateDiseaseReport(){
+
+    fetch("/generate_disease_statistics")
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+        document.getElementById("totalCases").innerHTML=data.total_cases;
+
+        document.getElementById("commonDisease").innerHTML=data.common_disease;
+
+        let rows="";
+
+        for(let i=0;i<data.labels.length;i++){
+
+            rows+=`
+
+            <tr>
+
+                <td>${data.labels[i]}</td>
+
+                <td>${data.values[i]}</td>
+
+            </tr>
+
+            `;
+
+        }
+
+        document.getElementById("diseaseTable").innerHTML=rows;
+
+        if(diseaseChart){
+
+            diseaseChart.destroy();
+
+        }
+
+        const ctx=document.getElementById("diseaseChart").getContext("2d");
+
+        diseaseChart=new Chart(ctx,{
+
+            type:"bar",
+
+            data:{
+
+                labels:data.labels,
+
+                datasets:[{
+
+                    label:"Patients",
+
+                    data:data.values,
+
+                    borderWidth:1
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        document.getElementById("aiReport").innerHTML=`
+
+<pre style="white-space:pre-wrap;font-size:15px;">
+
+🦠 Disease Summary
+
+• Total Disease Cases : ${data.total_cases}
+
+• Most Common Disease : ${data.common_disease}
+
+• Disease distribution is based on registered patients.
+
+• Continue monitoring disease trends.
+
+• Promote preventive healthcare.
+
+</pre>
+
+`;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,242 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        👨‍⚕️ Doctor Productivity Dashboard
+    </h2>
+
+    <button class="btn btn-primary mb-3"
+            onclick="generateDoctorReport()">
+
+        🤖 Generate Doctor Report
+
+    </button>
+
+    <a href="/reports" class="btn btn-secondary mb-3">
+        ← Go Back
+    </a>
+
+<div id="reportResult">
+
+        <div class="alert alert-info">
+
+            Click the button to generate the Report.
+
+        </div>
+
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card bg-primary text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>👨‍⚕️ Total Doctors</h5>
+
+                    <h2 id="doctorCount">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>🏆 Best Doctor</h5>
+
+                    <h5 id="bestDoctor">-</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card bg-warning shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>📅 Total Appointments</h5>
+
+                    <h2 id="appointmentCount">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-3">
+
+        <div class="card-body">
+
+            <h4>📊 Doctor Appointments</h4>
+
+            <canvas id="doctorChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+let doctorChart = null;
+
+function generateDoctorReport(){
+
+    fetch("/generate_doctor_productivity")
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+        document.getElementById("doctorCount").innerHTML = data.labels.length;
+
+        document.getElementById("bestDoctor").innerHTML = data.best_doctor;
+
+        let total = 0;
+
+        data.values.forEach(v=> total += v);
+
+        document.getElementById("appointmentCount").innerHTML = total;
+
+        if(doctorChart){
+
+            doctorChart.destroy();
+
+        }
+
+        const ctx=document.getElementById("doctorChart").getContext("2d");
+
+        doctorChart=new Chart(ctx,{
+
+            type:"bar",
+
+            data:{
+
+                labels:data.labels,
+
+                datasets:[{
+
+                    label:"Appointments",
+
+                    data:data.values,
+
+                    borderWidth:1
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true
+
+                    }
+
+                }
+
+            }
+
+        });
+
+       document.getElementById("reportResult").innerHTML=`
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <h4>📋 Doctor Productivity</h4>
+
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Doctor</th>
+
+                    <th>Appointments</th>
+
+                    <th>Patients</th>
+
+                    <th>Rating</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="doctorTable">
+
+            </tbody>
+
+        </table>
+
+        <hr>
+
+        <h4>🤖 AI Analysis</h4>
+
+        <pre style="white-space:pre-wrap;">${data.ai_report}</pre>
+
+    </div>
+
+</div>
+
+`;
+let rows = "";
+
+for(let i = 0; i < data.labels.length; i++){
+
+    let rating = "⭐⭐";
+
+    if(data.values[i] >= 30)
+        rating = "⭐⭐⭐⭐⭐";
+    else if(data.values[i] >= 20)
+        rating = "⭐⭐⭐⭐";
+    else if(data.values[i] >= 10)
+        rating = "⭐⭐⭐";
+
+    rows += `
+    <tr>
+        <td>${data.labels[i]}</td>
+        <td>${data.values[i]}</td>
+        <td>${data.patients[i]}</td>
+        <td>${rating}</td>
+    </tr>
+    `;
+}
+
+document.getElementById("doctorTable").innerHTML = rows;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

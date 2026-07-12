@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        📊 Reports Dashboard
+    </h2>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white text-center">
+                <h5>🏥AI Hospital Performance</h5>
+            </div>
+
+            <div class="card-body fw-bold text-center">
+                    <p>
+                        View AI analysis of hospital performance.
+                    </p>
+
+                    <a href="/hospital_performance"
+                       class="btn btn-primary">
+                        View Report
+                    </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+
+            <div class="card-header bg-warning text-white text-center">
+                <h5>🏥Department Performance</h5>
+            </div>
+
+            <div class="card-body fw-bold text-center">
+                    <p>
+                        View complete Department Performance.
+                    </p>
+
+                    <a href="/department_report"
+                       class="btn btn-primary">
+                        View Report
+                    </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+
+            <div class="card-header bg-danger text-white text-center">
+                <h5>🏥Doctor Productivity Performance</h5>
+            </div>
+
+            <div class="card-body fw-bold text-center">
+                    <p>
+                       View complete Doctor Productivity Performance.
+                    </p>
+
+                    <a href="/doctor_productivity"
+                       class="btn btn-primary">
+                        View Report
+                    </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white text-center">
+                <h5>🏥Revenue Analysis Performance</h5>
+            </div>
+
+            <div class="card-body fw-bold text-center">
+                    <p>
+                        View complete Revenue performance.
+                    </p>
+
+                    <a href="/revenue_analytics"
+                       class="btn btn-primary">
+                        View Report
+                    </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+
+            <div class="card-header bg-info text-white text-center">
+                <h5>🏥 Disease Statistics Performance</h5>
+            </div>
+
+            <div class="card-body fw-bold text-center">
+                    <p>
+                        View complete Disease Statistics performance.
+                    </p>
+
+                    <a href="/disease_statistics"
+                       class="btn btn-primary">
+                        View Report
+                    </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+
+            <div class="card-header bg-dark text-white text-center">
+                <h5>🏥 Patient Admission Analysis Performance</h5>
+            </div>
+
+            <div class="card-body fw-bold text-center">
+                    <p>
+                        View complete Patient Admission performance.
+                    </p>
+
+                    <a href="/patient_admission_analytics"
+                       class="btn btn-primary">
+                        View Report
+                    </a>
+            </div>
+        </div>
+    </div>
+    <a href="/dashboard" class="btn btn-primary mb-3">
+        ← Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}

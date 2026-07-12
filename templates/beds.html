@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>🛏 Bed Allocation Management</h3>
+
+        </div>
+
+        <div class="card-body">
+
+           <div class="d-flex justify-content-between mb-3">
+
+    <form action="/beds" method="GET" class="d-flex">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control me-2"
+            placeholder="🔍 Search Patient / Bed..."
+            value="{{ search }}">
+
+        <button class="btn btn-primary">
+            Search
+        </button>
+
+    </form>
+
+    <div>
+
+        <a href="/dashboard" class="btn btn-secondary">
+            🏠 Dashboard
+        </a>
+
+        <a href="/add_bed" class="btn btn-success">
+            ➕ Allocate Bed
+        </a>
+
+    </div>
+
+</div>
+
+            <h4 class="mb-3">🏥 Department Bed Summary</h4>
+
+            <table class="table table-bordered">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Department</th>
+                        <th>Total Beds</th>
+                        <th>Occupied Beds</th>
+                        <th>Available Beds</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for b in bed_summary %}
+
+                <tr>
+
+                    <td>{{ b[1] }}</td>
+
+                    <td>{{ b[2] }}</td>
+
+                    <td>{{ b[3] }}</td>
+
+                    <td>{{ b[2]-b[3] }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <hr>
+
+            <h4 class="mb-3">👤 Bed Allocation List</h4>
+
+            <table class="table table-striped table-hover">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Bed Number</th>
+                        <th>Allocation Date</th>
+                        <th>Discharge Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>Edit</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for a in allocations %}
+
+                <tr>
+
+                    <td>{{ a[0] }}</td>
+
+                    <td>{{ a[1] }}</td>
+
+                    <td>{{ a[2] }}</td>
+
+                    <td>{{ a[3] }}</td>
+
+                    <td>{{ a[4] }}</td>
+
+                    <td>
+
+                        {% if a[5]=="Occupied" %}
+
+                        <span class="badge bg-danger">
+                            Occupied
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-success">
+                            Available
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+                    <td>
+
+                        {% if a[5]=="Occupied" %}
+
+                        <a href="/discharge_bed/{{ a[0] }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Discharge Patient?')">
+                            Discharge
+                        </a>
+                            {% else %}
+
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+                            {% endif %}
+                    </td> 
+
+                    <td>
+
+                        <a href="/edit_bed/{{ a[0] }}"
+                           class="btn btn-warning btn-sm">
+                            ✏ Edit
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <a href="/dashboard" class="btn btn-primary mb-3">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>
+{% endblock %}

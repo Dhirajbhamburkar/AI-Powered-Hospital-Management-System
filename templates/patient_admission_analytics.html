@@ -1,0 +1,228 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        🏥 Patient Admission Analysis Dashboard
+    </h2>
+
+    <button class="btn btn-primary mb-3"
+            onclick="generateAdmissionReport()">
+
+        🤖 Generate Admission Report
+
+    </button>
+
+    <a href="/reports" class="btn btn-secondary mb-3">
+        ← Go Back
+    </a>
+
+    <div class="alert alert-info">
+        Click the button to generate the Report.
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+
+            <div class="card bg-primary text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Patients</h5>
+
+                    <h2 id="totalPatients">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Admitted</h5>
+
+                    <h2 id="admittedPatients">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card bg-danger text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Discharged</h5>
+
+                    <h2 id="dischargedPatients">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card bg-warning shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Admission Rate</h5>
+
+                    <h2 id="admissionRate">0%</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <h4>📊 Admission Analytics</h4>
+
+            <canvas id="admissionChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4>🤖 AI Admission Analysis</h4>
+
+            <div id="aiReport">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+let admissionChart = null;
+
+function generateAdmissionReport(){
+
+    fetch("/generate_patient_admission_report")
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+       document.getElementById("totalPatients").innerHTML = data.total_patients;
+
+       document.getElementById("admittedPatients").innerHTML = data.labels.length;
+
+       document.getElementById("dischargedPatients").innerHTML =
+       Math.max(...data.values);
+
+       document.getElementById("admissionRate").innerHTML = "100%";
+       
+        if(admissionChart){
+
+            admissionChart.destroy();
+
+        }
+
+        const ctx=document.getElementById("admissionChart").getContext("2d");
+
+        admissionChart=new Chart(ctx,{
+
+            type:"bar",
+
+            data:{
+
+                labels:data.labels,
+
+                datasets:[{
+
+                    label:"Monthly Admissions",
+
+                    data:data.values,
+
+                    borderWidth:1
+
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        document.getElementById("aiReport").innerHTML = `
+
+<pre style="white-space:pre-wrap;font-size:15px;">
+
+🏥 Monthly Admission Analysis
+
+• Total Patients : ${data.total_patients}
+
+• Months Recorded : ${data.labels.length}
+
+• Highest Monthly Admissions : ${Math.max(...data.values)}
+
+• Admissions are distributed across different months.
+
+Recommendations
+
+✅ Monitor monthly admission trends.
+
+✅ Allocate staff according to patient load.
+
+✅ Improve bed planning.
+
+✅ Increase resources during high-admission months.
+
+✅ Review hospital performance every month.
+
+</pre>
+
+`;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

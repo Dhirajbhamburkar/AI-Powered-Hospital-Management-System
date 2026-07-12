@@ -1,0 +1,146 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning text-dark">
+
+            <h3>✏ Edit Appointment</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form action="/update_appointment/{{ appointment[0] }}" method="POST">
+
+                <div class="mb-3">
+
+                    <label>Patient</label>
+
+                    <select class="form-control" name="patient_id">
+
+                        {% for p in patients %}
+
+                        <option value="{{ p[0] }}"
+                        {% if p[0]==appointment[1] %}selected{% endif %}>
+
+                            {{ p[1] }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Doctor</label>
+
+                    <select class="form-control" name="doctor_id">
+
+                        {% for d in doctors %}
+
+                        <option value="{{ d[0] }}"
+                        {% if d[0]==appointment[2] %}selected{% endif %}>
+
+                            {{ d[1] }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Date</label>
+
+                    <input
+                        type="date"
+                        class="form-control"
+                        name="appointment_date"
+                        value="{{ appointment[3] }}"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Time</label>
+
+                    <input
+                        type="time"
+                        class="form-control"
+                        name="appointment_time"
+                        value="{{ appointment[4] }}"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Reason</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="reason"
+                        value="{{ appointment[5] }}"
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Status</label>
+
+                    <select class="form-control" name="status">
+
+                        <option
+                        {% if appointment[6]=="Scheduled" %}selected{% endif %}>
+                        Scheduled
+                        </option>
+
+                        <option
+                        {% if appointment[6]=="Completed" %}selected{% endif %}>
+                        Completed
+                        </option>
+
+                        <option
+                        {% if appointment[6]=="Cancelled" %}selected{% endif %}>
+                        Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    💾 Update Appointment
+
+                </button>
+
+                <a href="/appointments" class="btn btn-secondary">
+
+                    Back
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

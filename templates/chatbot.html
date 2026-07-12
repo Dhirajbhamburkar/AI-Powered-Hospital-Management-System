@@ -1,0 +1,321 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+                <i class="bi bi-robot"></i>
+                AI Hospital Assistant
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div id="chatBox"
+                 style="height:400px;
+                        overflow-y:auto;
+                        overflow-x:hidden;
+                        word-break:break-word;
+                        border:1px solid #ddd;
+                        padding:15px;
+                        border-radius:10px;
+                        background:#f8f9fa;">
+
+                <div class="alert alert-info">
+                    👋 Hello! I'm your Hospital AI Assistant.<br>
+                    Ask me anything about Patients, Doctors,
+                    Appointments, Billing or Pharmacy.
+                </div>
+
+            </div>
+        
+        <div class="mb-3">
+
+    <strong>💡 Quick Questions:</strong><br><br>
+
+    <button class="btn btn-outline-primary btn-sm m-1"
+        onclick="askQuick('How many patients are registered?')">
+        👨 Patients
+    </button>
+
+    <button class="btn btn-outline-success btn-sm m-1"
+        onclick="askQuick('How many doctors are available?')">
+        🩺 Doctors
+    </button>
+
+    <button class="btn btn-outline-warning btn-sm m-1"
+        onclick="askQuick('Available beds')">
+        🛏 Beds
+    </button>
+
+    <button class="btn btn-outline-danger btn-sm m-1"
+        onclick="askQuick('Explain Billing')">
+        💰 Billing
+    </button>
+
+    <button class="btn btn-outline-info btn-sm m-1"
+        onclick="askQuick('What is Diabetes?')">
+        💊 Diabetes
+    </button>
+
+</div>
+
+            <div class="input-group mt-3">
+
+                <input
+                    type="text"
+                    id="userMessage"
+                    class="form-control"
+                    placeholder="Type your question...">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="sendMessage()">
+
+                    Send
+
+                </button>
+
+                <button
+                    id="micBtn"
+                    class="btn btn-danger ms-2">
+                        <i class="bi bi-mic-fill"></i>
+                </button>
+
+                <div id="voiceStatus"
+                    class="text-center mt-2 text-muted fw-bold">: Hold to Talk
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+function askQuick(question){
+
+    document.getElementById("userMessage").value = question;
+
+    sendMessage();
+
+}
+
+function sendMessage(){
+
+    let message = document.getElementById("userMessage").value;
+
+    if(message=="") return;
+
+    let chatBox = document.getElementById("chatBox");
+
+   chatBox.innerHTML += `
+    <div class="d-flex justify-content-end mb-3">
+
+        <div class="bg-primary text-white p-3 rounded shadow-sm"
+            style="max-width:75%;">
+
+            ${message}
+        </div>
+
+    </div>
+`;
+
+    let formData = new FormData();
+    formData.append("message", message);
+
+    fetch("/ask_ai",{
+
+        method:"POST",
+
+        body:formData
+
+    })
+
+    .then(response=>response.json())
+
+    .then(data=>{
+
+        chatBox.innerHTML += `
+<div class="d-flex mb-3">
+
+    <div class="bg-success text-white p-3 rounded shadow-sm"
+         style="
+            max-width:75%;
+            white-space:pre-wrap;
+            word-wrap:break-word;
+            overflow-wrap:anywhere;
+         ">
+
+        🤖 ${data.reply}
+
+    </div>
+
+</div>
+`;
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        const speech = new SpeechSynthesisUtterance(data.reply);
+
+        speech.lang = "en-US";
+
+        window.speechSynthesis.speak(speech);
+
+    });
+
+    document.getElementById("userMessage").value="";
+
+}
+
+document.getElementById("userMessage").addEventListener("keypress", function(event){
+
+    if(event.key==="Enter"){
+
+        sendMessage();
+
+    }
+
+});
+
+let mediaRecorder;
+let stream;
+let audioChunks = [];
+
+async function startRecording() {
+
+    try {
+
+        stream = await navigator.mediaDevices.getUserMedia({
+            audio: true
+        });
+
+        audioChunks = [];
+
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.start();
+
+        document.getElementById("voiceStatus").innerHTML =
+            "🎤 Listening...";
+
+        document.getElementById("micBtn")
+            .classList.remove("btn-danger");
+
+        document.getElementById("micBtn")
+            .classList.add("btn-success");
+
+        mediaRecorder.ondataavailable = function(e) {
+
+            audioChunks.push(e.data);
+
+        };
+
+    }
+
+    catch(err){
+
+        alert(err);
+
+    }
+
+}
+
+function stopRecording() {
+
+    if(!mediaRecorder) return;
+
+    mediaRecorder.stop();
+
+    document.getElementById("voiceStatus").innerHTML =
+        "⏳ Processing...";
+
+    document.getElementById("micBtn")
+        .classList.remove("btn-success");
+
+    document.getElementById("micBtn")
+        .classList.add("btn-danger");
+
+    mediaRecorder.onstop = function(){
+
+        const audioBlob = new Blob(audioChunks,{
+            type:"audio/webm"
+        });
+
+        uploadAudio(audioBlob);
+
+        stream.getTracks().forEach(track=>track.stop());
+
+    };
+
+}
+
+function uploadAudio(audioBlob) {
+
+    const formData = new FormData();
+
+    formData.append("audio", audioBlob, "voice.webm");
+
+    fetch("/upload_voice", {
+
+        method: "POST",
+
+        body: formData
+
+    })
+    
+    .then(res => res.json())
+        .then(data => {
+
+            console.log(data);
+
+            if (!data.success || !data.text || data.text.trim() === "") {
+
+                document.getElementById("voiceStatus").innerHTML =
+                    "🎤 Try Again";
+
+            return;
+        }
+
+        document.getElementById("voiceStatus").innerHTML = "";
+
+        document.getElementById("userMessage").value = data.text.trim();
+
+        sendMessage();
+
+    });
+
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const micBtn = document.getElementById("micBtn");
+
+    micBtn.addEventListener("mousedown", startRecording);
+
+    micBtn.addEventListener("mouseup", stopRecording);
+
+    micBtn.addEventListener("mouseleave", stopRecording);
+
+ // Mobile Support
+    micBtn.addEventListener("touchstart", function(e){
+        e.preventDefault();
+        startRecording();
+    });
+
+    micBtn.addEventListener("touchend", function(e){
+        e.preventDefault();
+        stopRecording();
+    });
+
+});
+
+</script>
+{% endblock %}

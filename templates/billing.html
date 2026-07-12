@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="text-center fw-bold text-primary mb-4">
+        💰 Hospital Billing System
+    </h2>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-success text-white">
+            <h4>💰 Generate Bill</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form action="/add_bill" method="POST">
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Patient</label>
+
+                        <select class="form-control" name="patient_id" required>
+
+                            {% for p in patients %}
+                            <option value="{{ p[0] }}">
+                                {{ p[1] }}
+                            </option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Consultation</label>
+                        <input type="number" class="form-control" name="consultation_fee" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Medicine</label>
+                        <input type="number" class="form-control" name="medicine_charge" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Room</label>
+                        <input type="number" class="form-control" name="room_charge" required>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label">Status</label>
+
+                        <select class="form-control" name="payment_status">
+                            <option>Paid</option>
+                            <option>Pending</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success">
+                    💾 Generate Bill
+                </button>
+
+                <a href="/dashboard" class="btn btn-secondary">
+                    🏠 Dashboard
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h3 class="text-center mb-3">
+        📋 Bill History
+    </h3>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Bill ID</th>
+                <th>Patient Name</th>
+                <th>Consultation</th>
+                <th>Medicine</th>
+                <th>Room</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for bill in bills %}
+
+        <tr>
+
+            <td>{{ bill[0] }}</td>
+            <td>{{ bill[1] }}</td>
+            <td>₹ {{ bill[2] }}</td>
+            <td>₹ {{ bill[3] }}</td>
+            <td>₹ {{ bill[4] }}</td>
+            <td><b>₹ {{ bill[5] }}</b></td>
+            <td>{{ bill[6] }}</td>
+
+            <td>
+                <a href="/print_bill/{{ bill[0] }}" class="btn btn-primary btn-sm">
+                    🖨 Print
+                </a>
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <a href="/dashboard" class="btn btn-primary mb-3">
+        ⬅ Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

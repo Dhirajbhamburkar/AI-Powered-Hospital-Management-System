@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center text-primary">
+        👨‍⚕️ Doctors List
+    </h2>
+
+       <div class="card shadow mb-4">
+
+    <div class="card-header bg-success text-white">
+        <h4>➕ Add New Doctor</h4>
+    </div>
+
+    <div class="card-body">
+
+        <form action="/add_doctor" method="POST">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <label>Doctor Name</label>
+                    <input type="text" class="form-control" name="doctor_name" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Specialization</label>
+                    <input type="text" class="form-control" name="specialization" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Experience (Years)</label>
+                    <input type="number" class="form-control" name="experience" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Mobile</label>
+                    <input type="text" class="form-control" name="mobile" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+
+            </div>
+
+            <button class="btn btn-success">
+                💾 Save Doctor
+            </button>
+
+            <a href="/dashboard" class="btn btn-secondary">
+                🏠 Dashboard
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Experience</th>
+                <th>Mobile</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for d in doctors %}
+
+        <tr>
+            <td>{{ d[0] }}</td>
+            <td>{{ d[1] }}</td>
+            <td>{{ d[2] }}</td>
+            <td>{{ d[3] }} Years</td>
+            <td>{{ d[4] }}</td>
+            <td>{{ d[5] }}</td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <a href="/dashboard" class="btn btn-primary mb-3">
+        ← Back to Dashboard
+    </a>
+
+</div>
+</body>
+</html>
+{% endblock %}

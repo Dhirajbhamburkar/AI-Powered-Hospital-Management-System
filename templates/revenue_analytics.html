@@ -1,0 +1,224 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        💰 Revenue Analysis Dashboard
+    </h2>
+
+    <button class="btn btn-primary mb-3"
+            onclick="generateRevenueReport()">
+
+        🤖 Generate Revenue Report
+
+    </button>
+
+    <a href="/reports" class="btn btn-secondary mb-3">
+        ← Go Back
+    </a>
+
+    <div class="alert alert-info">
+
+                    Click the button to generate the report.
+
+                </div>
+
+
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Revenue</h5>
+
+                    <h3 id="totalRevenue">₹0</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card bg-primary text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Bills</h5>
+
+                    <h3 id="totalBills">0</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card bg-warning shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Average Bill</h5>
+
+                    <h3 id="averageBill">₹0</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card bg-danger text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Highest Bill</h5>
+
+                    <h3 id="highestBill">₹0</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <h4>📊 Revenue Summary</h4>
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4>🤖 AI Financial Analysis</h4>
+
+            <div id="aiReport">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+let revenueChart = null;
+
+function generateRevenueReport(){
+
+    fetch("/generate_revenue_report")
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+        document.getElementById("totalRevenue").innerHTML="₹"+data.total_revenue;
+
+        document.getElementById("totalBills").innerHTML=data.total_bills;
+
+        document.getElementById("averageBill").innerHTML="₹"+data.average_bill;
+
+        document.getElementById("highestBill").innerHTML="₹"+data.highest_bill;
+
+        if(revenueChart){
+
+            revenueChart.destroy();
+
+        }
+
+        const ctx=document.getElementById("revenueChart").getContext("2d");
+
+        revenueChart=new Chart(ctx,{
+
+            type:"bar",
+
+            data:{
+
+                labels:["Revenue","Average","Highest"],
+
+                datasets:[{
+
+                    label:"Amount",
+
+                    data:[
+                        data.total_revenue,
+                        data.average_bill,
+                        data.highest_bill
+                    ]
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        document.getElementById("aiReport").innerHTML=`
+
+<pre style="white-space:pre-wrap; font-size:15px;">
+💰 Revenue Analysis
+
+• Total Revenue : ₹${data.total_revenue}
+
+• Total Bills : ${data.total_bills}
+
+• Average Bill : ₹${data.average_bill}
+
+• Highest Bill : ₹${data.highest_bill}
+
+✅ Revenue collection is good.
+
+✅ Continue improving billing efficiency.
+
+✅ Monitor monthly revenue trends.
+
+</pre>
+
+`;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

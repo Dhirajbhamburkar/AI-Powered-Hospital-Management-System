@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2 class="mt-4">AI Disease Prediction</h2>
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>🩺 AI Disease Prediction</h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>Age</label>
+                    <input type="number" id="age" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Temperature (°F)</label>
+                    <input type="number" id="temp" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Symptoms</label>
+
+                    <div class="form-check">
+                        <input class="form-check-input symptom" type="checkbox" value="Fever">
+                        <label class="form-check-label">Fever</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input symptom" type="checkbox" value="Cough">
+                        <label class="form-check-label">Cough</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input symptom" type="checkbox" value="Headache">
+                        <label class="form-check-label">Headache</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input symptom" type="checkbox" value="Body Pain">
+                        <label class="form-check-label">Body Pain</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input symptom" type="checkbox" value="Vomiting">
+                        <label class="form-check-label">Vomiting</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input symptom" type="checkbox" value="Fatigue">
+                        <label class="form-check-label">Fatigue</label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="btn btn-success mt-3" onclick="predictDisease()">
+                🔍 Predict Disease
+            </button>
+
+            <a href="/download_ai_report"
+                class="btn btn-success mt-3">
+                    📄 Download AI Report
+            </a>
+
+            <hr>
+
+            <div id="result"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function predictDisease(){
+
+    let symptoms=[];
+
+    document.querySelectorAll(".symptom:checked").forEach(function(item){
+
+        symptoms.push(item.value);
+
+    });
+
+    let formData=new FormData();
+
+    formData.append("age",document.getElementById("age").value);
+    formData.append("temp",document.getElementById("temp").value);
+    formData.append("symptoms",symptoms.join(","));
+
+    fetch("/predict_disease",{
+
+        method:"POST",
+
+        body:formData
+
+    })
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+        document.getElementById("result").innerHTML = `
+
+        <div class="alert alert-success"
+            style="white-space:pre-wrap;
+                font-size:16px;
+                line-height:1.8;">
+
+        <h4>🩺 ${data.disease}</h4>
+
+        <hr>
+
+        ${data.advice}
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,259 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        🏥 AI Department Performance Dashboard
+    </h2>
+
+    <button class="btn btn-primary mb-4"
+            onclick="generateDepartmentReport()">
+
+        🤖 Generate AI Report
+
+    </button>
+
+    <a href="/reports" class="btn btn-secondary mb-4">
+        ← Go Back
+    </a>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card bg-primary text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Departments</h5>
+
+                    <h2 id="departmentCount">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Best Department</h5>
+
+                    <h3 id="bestDepartment">-</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card bg-warning shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>Total Patients</h5>
+
+                    <h2 id="patientCount">0</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <h4>📊 Department-wise Patients</h4>
+
+            <canvas id="departmentChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <h4>📋 Department Summary</h4>
+
+            <table class="table table-bordered table-striped">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Department</th>
+                        <th>Patients</th>
+                        <th>Doctors</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="departmentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4>🤖 AI Department Analysis</h4>
+
+            <div id="reportResult">
+
+                <div class="alert alert-info">
+
+                    Click the button to generate AI Department Report.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+let departmentChart = null;
+
+function generateDepartmentReport(){
+
+    fetch("/generate_department_report")
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+        document.getElementById("departmentCount").innerHTML =
+        data.departments.length;
+
+        document.getElementById("bestDepartment").innerHTML =
+        data.best_department;
+
+        let totalPatients = 0;
+
+        let rows = "";
+
+        for(let i=0;i<data.departments.length;i++){
+
+            totalPatients += data.patients[i];
+
+            rows += `
+
+            <tr>
+
+                <td>${data.departments[i]}</td>
+
+                <td>${data.patients[i]}</td>
+
+                <td>${data.doctors[i]}</td>
+
+            </tr>
+
+            `;
+
+        }
+
+        document.getElementById("patientCount").innerHTML =
+        totalPatients;
+
+        document.getElementById("departmentTable").innerHTML =
+        rows;
+
+        if(departmentChart){
+
+            departmentChart.destroy();
+
+        }
+
+        const ctx =
+        document.getElementById("departmentChart").getContext("2d");
+
+        departmentChart = new Chart(ctx,{
+
+            type:"bar",
+
+            data:{
+
+                labels:data.departments,
+
+                datasets:[{
+
+                    label:"Patients",
+
+                    data:data.patients,
+
+                    borderWidth:1
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                scales:{
+
+                    y:{
+
+                        beginAtZero:true
+
+                    }
+
+                }
+
+            }
+
+        });
+
+        document.getElementById("reportResult").innerHTML = `
+
+<div class="card mt-3 shadow">
+
+<div class="card-body">
+
+<pre style="white-space:pre-wrap;font-size:15px;">
+
+${data.ai_report}
+
+</pre>
+
+</div>
+
+</div>
+
+`;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

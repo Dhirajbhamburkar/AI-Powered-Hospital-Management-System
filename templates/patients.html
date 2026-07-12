@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-primary text-white">
+
+            <h2>👨‍💼 Patient List</h2>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-3">
+
+    <form action="/patients" method="GET" class="mb-4">
+
+    <div class="input-group">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search by Name, Disease or Department">
+
+        <button class="btn btn-primary">
+            Search
+        </button>
+
+    </div>
+
+</form>
+
+    <div>
+
+        <a href="/dashboard" class="btn btn-secondary">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="/patients" class="btn btn-secondary">
+                🔄 Refresh
+        </a>
+
+    </div>
+
+</div>
+
+<body>
+
+<div class="container mt-5">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-success">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table class="table table-bordered table-striped table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Mobile</th>
+                <th>Disease</th>
+                <th>Department</th>
+                <th>Assigned Doctor</th>
+                <th>Admission Date</th>
+                <th>Action</th>
+            </tr>
+       </thead>
+
+        <tbody>
+
+            {% for p in patients %}
+
+            <tr>
+                <td>{{ p[0] }}</td>   <!-- ID -->
+                <td>{{ p[1] }}</td>   <!-- Name -->
+                <td>{{ p[2] }}</td>   <!-- Age -->
+                <td>{{ p[3] }}</td>   <!-- Gender -->
+                <td>{{ p[4] }}</td>   <!-- Mobile -->
+                <td>{{ p[5] }}</td>   <!-- Disease -->
+                <td>{{ p[6] }}</td>   <!-- Department -->
+                <td>{{ p[7] }}</td>   <!-- Assigned Doctor -->
+                <td>{{ p[8] }}</td>   <!-- Admission Date -->
+                <td>
+
+                    <a href="/patient/{{ p[0] }}" class="btn btn-info btn-sm">
+                        👁 View
+                    </a>
+
+                    &nbsp;
+
+                    <a href="/edit/{{ p[0] }}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    &nbsp;
+                    
+                    <a href="/delete/{{ p[0] }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this patient?')">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <a href="/dashboard" class="btn btn-primary">
+        ← Back to Home
+    </a>
+</div>
+</body>
+</html>
+{% endblock %}

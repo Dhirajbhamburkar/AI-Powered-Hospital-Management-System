@@ -1,0 +1,208 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        🏥 AI Hospital Performance Dashboard
+    </h2>
+
+    <button class="btn btn-primary mb-4"
+            onclick="generateReport()">
+
+        🤖 Generate AI Report
+
+    </button>
+    <a href="/reports" class="btn btn-secondary mb-4">
+        ← Go Back
+    </a>
+    <div class="row">
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-primary text-white shadow">
+                <div class="card-body text-center">
+                    <h5>👤 Patients</h5>
+                    <h2 id="patientsCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white shadow">
+                <div class="card-body text-center">
+                    <h5>👨‍⚕️ Doctors</h5>
+                    <h2 id="doctorsCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-info text-white shadow">
+                <div class="card-body text-center">
+                    <h5>👨‍💼 Staff</h5>
+                    <h2 id="staffCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-warning shadow">
+                <div class="card-body text-center">
+                    <h5>📅 Appointments</h5>
+                    <h2 id="appointmentCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-secondary text-white shadow">
+                <div class="card-body text-center">
+                    <h5>🛏 Total Beds</h5>
+                    <h2 id="bedsCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-danger text-white shadow">
+                <div class="card-body text-center">
+                    <h5>✅ Available Beds</h5>
+                    <h2 id="availableCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-dark text-white shadow">
+                <div class="card-body text-center">
+                    <h5>🎯 Hospital Score</h5>
+                    <h2 id="scoreCard">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card bg-light shadow">
+                <div class="card-body text-center">
+                    <h5>🏥 Status</h5>
+                    <h5 id="statusCard">-</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <h5>🛏 Bed Occupancy</h5>
+
+            <div class="progress" style="height:30px;">
+
+                <div id="occupancyBar"
+                     class="progress-bar bg-success"
+                     style="width:0%;">
+
+                    0%
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4>🤖 AI Hospital Report</h4>
+
+            <div id="reportResult">
+
+                <div class="alert alert-info">
+
+                    Click the button to generate the AI Hospital Report.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function generateReport(){
+
+fetch("/generate_hospital_report")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+document.getElementById("patientsCard").innerHTML=data.patients;
+
+document.getElementById("doctorsCard").innerHTML=data.doctors;
+
+document.getElementById("staffCard").innerHTML=data.staff;
+
+document.getElementById("appointmentCard").innerHTML=data.appointments;
+
+document.getElementById("bedsCard").innerHTML=data.beds;
+
+document.getElementById("availableCard").innerHTML=data.available;
+
+document.getElementById("scoreCard").innerHTML=data.score+"/100";
+
+document.getElementById("statusCard").innerHTML=data.status;
+
+document.getElementById("occupancyBar").style.width=data.occupancy+"%";
+
+document.getElementById("occupancyBar").innerHTML=data.occupancy+"%";
+
+if(data.occupancy<60){
+
+document.getElementById("occupancyBar").className="progress-bar bg-success";
+
+}
+
+else if(data.occupancy<85){
+
+document.getElementById("occupancyBar").className="progress-bar bg-warning";
+
+}
+
+else{
+
+document.getElementById("occupancyBar").className="progress-bar bg-danger";
+
+}
+
+document.getElementById("reportResult").innerHTML=`
+
+<div class="card mt-3 shadow">
+
+<div class="card-body">
+
+<pre style="white-space:pre-wrap;font-size:15px;">${data.report}</pre>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+</script>
+
+{% endblock %}

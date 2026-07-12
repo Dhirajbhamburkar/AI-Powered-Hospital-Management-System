@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Edit Patient</h2>
+
+    <form action="/update_patient/{{ patient[0] }}" method="POST">
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                value="{{ patient[1] }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label>Age</label>
+            <input
+                type="number"
+                name="age"
+                class="form-control"
+                value="{{ patient[2] }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label>Disease</label>
+            <input
+                type="text"
+                name="disease"
+                class="form-control"
+                value="{{ patient[3] }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label>Department</label>
+            <input
+                type="text"
+                name="department"
+                class="form-control"
+                value="{{ patient[4] }}"
+                required>
+        </div>
+
+        <button class="btn btn-success">
+            Update Patient
+        </button>
+
+        <a href="/patients" class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

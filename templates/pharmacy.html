@@ -1,0 +1,182 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row mb-4">
+
+    <div class="col-md-4">
+
+    </div>
+
+</div>
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-success text-white">
+
+            <h3>💊 Pharmacy Management</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-3">
+
+    <form action="/pharmacy" method="GET" class="d-flex">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control me-2"
+            placeholder="🔍 Search Medicine..."
+            value="{{ search }}">
+
+        <button class="btn btn-primary">
+            Search
+        </button>
+
+    </form>
+
+    <div>
+
+        <a href="/dashboard" class="btn btn-secondary">
+            🏠 Dashboard
+        </a>
+
+
+        <a href="/pharmacy" class="btn btn-secondary">
+            🔄 Refresh
+        </a>
+
+        <a href="/add_medicine" class="btn btn-success">
+            ➕ Add Medicine
+        </a>
+
+    </div>
+
+</div>
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Medicine</th>
+                        <th>Company</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Expiry</th>
+                        <th>Expiry Status</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for m in medicines %}
+
+                    <tr>
+
+                        <td>{{ m[0] }}</td>
+                        <td>{{ m[1] }}</td>
+                        <td>{{ m[2] }}</td>
+                        <td>{{ m[3] }}</td>
+                        <td>₹ {{ m[4] }}</td>
+                        <td>
+
+                                {% if m[5] < 10 %}
+
+                            <span class="badge bg-danger">
+
+                                {{ m[5] }}
+
+                            </span>
+
+                                {% else %}
+
+                            <span class="badge bg-success">
+
+                                {{ m[5] }}
+
+                            </span>
+
+                                {% endif %}
+
+                        </td>
+                        <td>{{ m[6] }}</td>
+
+                        <td>
+
+                            {% if m[7] < 0 %}
+
+                            <span class="badge bg-dark">
+                                Expired
+                            </span>
+
+                                {% elif m[7] <= 30 %}
+
+                            <span class="badge bg-danger">
+                                ⚠ Expiring Soon
+                            </span> 
+
+                                {% elif m[7] <= 90 %}
+
+                            <span class="badge bg-warning text-dark">
+                                Soon
+                            </span> 
+
+                                {% else %}
+
+                            <span class="badge bg-success">
+                                Valid
+                            </span>
+
+                                {% endif %}
+
+                        </td>
+                        <td>
+
+                            <a href="/edit_medicine/{{ m[0] }}"
+                               class="btn btn-warning btn-sm">
+
+                                ✏ Edit
+
+                            </a>
+
+                            <a href="/delete_medicine/{{ m[0] }}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this medicine?')">
+
+                                🗑 Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <a href="/dashboard" class="btn btn-primary mb-3">
+        ← Back to Dashboard
+    </a>
+</div>
+
+</body>
+</html>
+{% endblock %}

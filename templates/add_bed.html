@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-success text-white">
+
+            <h3>🛏 Allocate Bed</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form action="/save_bed" method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">Patient</label>
+
+                    <select name="patient_id" class="form-select" required>
+
+                        {% for p in patients %}
+
+                        <option value="{{ p[0] }}">
+
+                            {{ p[1] }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Department</label>
+
+                    <select name="bed_id" class="form-select" required>
+
+                        {% for d in departments %}
+
+                        <option value="{{ d[0] }}">
+
+                            {{ d[1] }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Bed Number</label>
+
+                    <input
+                        type="text"
+                        name="bed_number"
+                        class="form-control"
+                        placeholder="Example: G101"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Allocation Date</label>
+
+                    <input
+                        type="date"
+                        name="allocation_date"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    💾 Allocate Bed
+
+                </button>
+
+                <a href="/beds" class="btn btn-secondary">
+
+                    ⬅ Back
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+{% endblock %}

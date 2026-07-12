@@ -1,0 +1,239 @@
+{% extends "layout.html" %}
+
+{% block title %}Health Risk Prediction{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+        
+        <!-- Left Side Form -->
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3>
+                        🧠 AI Health Risk Prediction
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form id="predictionForm">
+
+                        <div class="mb-3">
+                            <label>Age</label>
+                            <input type="number" id="age" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Gender</label>
+                            <select id="gender" class="form-select">
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Height (cm)</label>
+                            <input type="number" id="height" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="weight" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Blood Pressure</label>
+                            <input type="number" id="bp" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Blood Sugar</label>
+                            <input type="number" id="sugar" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Heart Rate</label>
+                            <input type="number" id="heart_rate" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Smoking</label>
+                            <select id="smoking" class="form-select">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Alcohol</label>
+                            <select id="alcohol" class="form-select">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Exercise</label>
+                            <select id="exercise" class="form-select">
+                                <option value="2">Regular</option>
+                                <option value="1">Occasionally</option>
+                                <option value="0">Never</option>
+                            </select>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary w-100"
+                            onclick="predictRisk()">
+
+                            🧠 Predict Health Risk
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right Side Result -->
+
+        <div class="col-lg-6">
+
+            <div id="predictionResult" class="card shadow d-none">
+
+                <div class="card-header bg-success text-white">
+
+                    <h3>
+                        📊 Prediction Result
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <h4 id="riskLevel"></h4>
+
+                    <div class="progress mb-3" style="height:25px;">
+
+                        <div
+                            id="riskBar"
+                            class="progress-bar"
+                            style="width:0%;">
+
+                            0%
+
+                        </div>
+
+                    </div>
+
+                    <div id="resultContent"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function predictRisk(){
+
+    let age = document.getElementById("age").value;
+
+    let gender = document.getElementById("gender").value;
+
+    let height = document.getElementById("height").value;
+
+    let weight = document.getElementById("weight").value;
+
+    let bp = document.getElementById("bp").value;
+
+    let sugar = document.getElementById("sugar").value;
+
+    let heart_rate = document.getElementById("heart_rate").value;
+
+    let smoking = document.getElementById("smoking").value;
+
+    let alcohol = document.getElementById("alcohol").value;
+
+    let exercise = document.getElementById("exercise").value;
+
+    let formData = new FormData();
+
+    formData.append("age", age);
+    formData.append("gender", gender);
+    formData.append("height", height);
+    formData.append("weight", weight);
+    formData.append("bp", bp);
+    formData.append("sugar", sugar);
+    formData.append("heart_rate", heart_rate);
+    formData.append("smoking", smoking);
+    formData.append("alcohol", alcohol);
+    formData.append("exercise", exercise);
+
+    fetch("/predict_health",{
+
+        method:"POST",
+
+        body:formData
+
+    })
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+        document.getElementById("predictionResult")
+        .classList.remove("d-none");
+
+        document.getElementById("riskLevel").innerHTML =
+        "Health Risk : " + data.risk;
+
+        document.getElementById("riskBar").style.width =
+        data.score + "%";
+
+        document.getElementById("riskBar").className =
+        "progress-bar bg-" + data.color;
+
+        document.getElementById("riskBar").innerHTML =
+        data.score + "%";
+
+        document.getElementById("resultContent").innerHTML = `
+
+        <div class="alert alert-${data.color}">
+
+            <h5>${data.risk}</h5>
+
+            <hr>
+
+            <div style="white-space:pre-wrap;">
+
+                ${data.advice}
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

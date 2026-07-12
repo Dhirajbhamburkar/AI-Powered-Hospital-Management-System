@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-warning">
+
+            <h3>✏ Edit Bed Allocation</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form action="/update_bed" method="POST">
+
+                <input
+                    type="hidden"
+                    name="allocation_id"
+                    value="{{ allocation[0] }}">
+
+                <div class="mb-3">
+
+                    <label class="form-label">Patient</label>
+
+                    <select name="patient_id" class="form-select">
+
+                        {% for p in patients %}
+
+                        <option value="{{ p[0] }}"
+                        {% if p[0]==allocation[1] %}selected{% endif %}>
+
+                            {{ p[1] }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Department</label>
+
+                    <select name="bed_id" class="form-select">
+
+                        {% for d in departments %}
+
+                        <option value="{{ d[0] }}"
+                        {% if d[0]==allocation[2] %}selected{% endif %}>
+
+                            {{ d[1] }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Bed Number</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="bed_number"
+                        value="{{ allocation[3] }}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Allocation Date</label>
+
+                    <input
+                        type="date"
+                        class="form-control"
+                        name="allocation_date"
+                        value="{{ allocation[4] }}">
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    💾 Update Allocation
+
+                </button>
+
+                <a href="/beds" class="btn btn-secondary">
+
+                    ⬅ Back
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+{% endblock %}
