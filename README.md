@@ -373,16 +373,19 @@ recep123
 
 # 📸 Screenshots
 
-You can add screenshots here.
-
 - Login Page
 - Dashboard
+- Helth Risk Prediction
+- AI Disease Prediction
+- AI Chatbot
 - Patient Management
 - Doctor Management
+- Staff Management
+- Appointemt Management
 - Pharmacy
+- Bed Allocation Management
 - Billing
 - AI Reports
-- Disease Prediction
 
 ---
 
