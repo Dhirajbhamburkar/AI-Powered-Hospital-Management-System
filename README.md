@@ -377,19 +377,42 @@ recep123
 ![Login Page](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Login%20Page.png)
 
 ## 🏠 Dashboard
-![Dashboard](screenshots/dashboard.png)
-- Dashboard
-- Helth Risk Prediction
-- AI Disease Prediction
-- AI Chatbot
-- Patient Management
-- Doctor Management
-- Staff Management
-- Appointemt Management
-- Pharmacy
-- Bed Allocation Management
-- Billing
-- AI Reports
+![Dashboard](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Dashboard.png)
+![Dashboard](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Dashboard%202.png)
+
+## 🧠 Helth Risk Prediction
+![Helth Risk Prediction](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/AI%20Helth%20Risk%20Prediction.png)
+
+## 🤖 AI Disease Prediction
+![AI Disease Prediction](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/AI%20Disease%20Predicction.png)
+![AI Disease Prediction](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/AI%20Disease%20Prediction2.png)
+
+## 🤖 AI Chatbot
+![AI Chatbot](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/AI%20Chatbot.png)
+
+## 👨‍💼 Patient Management
+![Patient Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Patients%20Management.png)
+
+## 🩺 Doctor Management
+![Doctor Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Doctor%20Management.png)
+
+## 👨‍💼 Staff Management
+![Staff Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Login%20Page.png)
+
+## 📅 Appointemt Management
+![Appointemt Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Appointment%20Management.png)
+
+## 💊 Pharmacy Management
+![Pharmacy Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Pharmacy%20Management.png)
+
+## 🛏 Bed Allocation Management
+![Bed Allocation Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Beds%20Management.png)
+
+## 💰 Billing Management
+![Billing Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Billing%20Management.png)
+
+## 🤖 AI Reports
+![AI Reports](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/AI%20Report.png)
 
 ---
 
