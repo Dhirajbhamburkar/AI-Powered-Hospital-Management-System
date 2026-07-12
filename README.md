@@ -1,15 +1,180 @@
-# AI Powered Hospital Management System
+# 🏥 AI Powered Hospital Management System
 
-## Project Description
+<p align="center">
 
-AI Powered Hospital Management System is a web-based application developed using Python Flask and MySQL. It helps hospitals manage patients, doctors, staff, appointments, billing, pharmacy, bed management, and AI-powered reports.
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask)
+![MySQL](https://img.shields.io/badge/MySQL-Database-blue?logo=mysql)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?logo=bootstrap)
+![Machine Learning](https://img.shields.io/badge/Machine-Learning-green)
+![Google Gemini AI](https://img.shields.io/badge/Google-Gemini%20AI-orange)
 
-The project also integrates Google Gemini AI for intelligent disease prediction and hospital analytics.
+</p>
 
 ---
 
-## Folder structure
+# 📌 Project Overview
 
+AI Powered Hospital Management System is a web-based application developed using **Python Flask**, **MySQL**, **Machine Learning**, and **Google Gemini AI**.
+
+The system digitizes hospital operations by managing patients, doctors, staff, appointments, pharmacy, billing, bed allocation, and intelligent AI reports.
+
+It also provides predictive healthcare features using Machine Learning models and AI-powered analytics using Google Gemini.
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
+
+- Secure Login System
+- Session Management
+- Admin Access
+- Reception Access
+
+---
+
+## 👨‍⚕️ Patient Management
+
+- Register Patient
+- Edit Patient
+- Delete Patient
+- Search Patient
+- View Patient Details
+
+---
+
+## 🩺 Doctor Management
+
+- Add Doctor
+- Update Doctor
+- Delete Doctor
+- Doctor Productivity Report
+- AI Performance Analysis
+
+---
+
+## 👨‍💼 Staff Management
+
+- Add Staff
+- Update Staff
+- Delete Staff
+
+---
+
+## 📅 Appointment Management
+
+- Book Appointment
+- View Appointments
+- Search Appointment
+- Edit Appointment
+- Delete Appointment
+
+---
+
+## 🛏 Bed Management
+
+- Add Bed
+- Update Bed
+- Delete Bed
+- Available Bed Tracking
+- Occupied Bed Monitoring
+
+---
+
+## 💊 Pharmacy Management
+
+- Medicine Inventory
+- Medicine Search
+- Add Medicine
+- Update Medicine
+- Delete Medicine
+- Low Stock Alert
+- Expiry Monitoring
+
+---
+
+## 💰 Billing System
+
+- Generate Bill
+- PDF Bill Generation
+- Payment Status
+- Revenue Analytics
+
+---
+
+## 🤖 Artificial Intelligence Features
+
+- AI Chatbot
+- AI Disease Prediction
+- AI Medical Report Generator
+- AI Hospital Performance Report
+- AI Department Performance Report
+- AI Doctor Productivity Report
+- AI Revenue Analysis
+- AI Disease Statistics Report
+
+---
+
+## 🧠 Machine Learning Features
+
+- Health Risk Prediction
+- Disease Prediction
+
+---
+
+## 📊 Analytics Dashboard
+
+- Dashboard Statistics
+- Charts
+- Notifications
+- Reports
+
+---
+
+# 🛠 Technologies Used
+
+### Backend
+
+- Python
+- Flask
+
+### Frontend
+
+- HTML5
+- CSS3
+- Bootstrap 5
+- JavaScript
+
+### Database
+
+- MySQL
+
+### AI
+
+- Google Gemini API
+
+### Machine Learning
+
+- Scikit-Learn
+- Pandas
+- NumPy
+- Joblib
+
+### Visualization
+
+- Chart.js
+- Matplotlib
+
+### PDF
+
+- ReportLab
+
+---
+
+# 📂 Project Structure
+
+```text
 AI_Hospital_Management_System/
 │
 ├── backend/
@@ -26,32 +191,12 @@ AI_Hospital_Management_System/
 │   |     └── train_model.py
 │   │
 │   ├── templates/
-│   │   ├── layout.html
+|   |   ├── layout.html
 │   │   ├── login.html
 │   │   ├── index.html
 │   │   ├── patients.html
 │   │   ├── register_patient.html
-│   │   ├── patient_details.html
-│   │   ├── edit_patient.html
-│   │   ├── doctors.html
-│   │   ├── add_staff.html
-│   │   ├── staff.html
-│   │   ├── appointments.html
-│   │   ├── beds.html
-│   │   ├── billing.html
-│   │   ├── pharmacy.html
-│   │   ├── chatbot.html
-│   │   ├── disease_prediction.html
-│   │   ├── health_prediction.html
-│   │   ├── hospital_performance.html
-│   │   ├── department_report.html
-│   │   ├── doctor_productivity.html
-│   │   ├── patient_admission_analytics.html
-│   │   ├── disease_statistics.html
-│   │   ├── revenue_analytics.html
-│   │   ├── reports.html
-│   │   └── ... (other templates)
-│   │
+|   |   └── ... (other templates)
 |   |
 │   ├── uploads/
 │   │   ├── voice.webm
@@ -61,7 +206,6 @@ AI_Hospital_Management_System/
 |   ├── app.py/
 |   ├── requirements.txt
 |   └── README.md
-|
 |
 ├── database/
 │   └── hospital_db.sql
@@ -73,72 +217,207 @@ AI_Hospital_Management_System/
     ├── share
     ├── .gitgnore
     └── pyvenv.cfg
-
-
-## Technologies Used
-
-- Python
-- Flask
-- MySQL
-- HTML
-- CSS
-- Bootstrap
-- JavaScript
-- Chart.js
-- Google Gemini AI
-- Scikit-learn
-- Pandas
-- NumPy
+```
 
 ---
 
-## Features
+# ⚙ Installation Guide
 
-- Admin Login
+## Step 1
+
+Clone Repository
+
+```bash
+git clone https://github.com/yourusername/AI-Powered-Hospital-Management-System.git
+```
+
+---
+
+## Step 2
+
+Go to Project Folder
+
+```bash
+cd AI-Powered-Hospital-Management-System
+```
+
+---
+
+## Step 3
+
+Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+---
+
+## Step 4
+
+Activate Virtual Environment
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+## Step 5
+
+Install Required Libraries
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Step 6
+
+Configure Database
+
+Open MySQL
+
+Create Database
+
+```sql
+CREATE DATABASE hospital_db;
+```
+
+Import
+
+```
+hospital_db.sql
+```
+
+---
+
+## Step 7
+
+Configure Gemini API
+
+Open **app.py**
+
+Replace
+
+```python
+YOUR_GEMINI_API_KEY
+```
+
+with your own Google Gemini API Key.
+
+---
+
+## Step 8
+
+Run Application
+
+```bash
+python app.py
+```
+
+---
+
+## Step 9
+
+Open Browser
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+# 🔑 Default Login
+
+## Admin
+
+Username
+
+```
+admin
+```
+
+Password
+
+```
+admin123
+```
+
+---
+
+## Reception
+
+Username
+
+```
+reception
+```
+
+Password
+
+```
+recep123
+```
+
+---
+
+# 📸 Screenshots
+
+You can add screenshots here.
+
+- Login Page
+- Dashboard
 - Patient Management
 - Doctor Management
-- Staff Management
-- Appointment Management
-- Billing System
-- Bed Management
-- Pharmacy Management
-- AI Disease Prediction
-- Health Risk Prediction
-- AI Chatbot
-- AI Medical Report Generator
-- Hospital Performance Report
-- Department Performance Report
-- Doctor Productivity Report
-- Revenue Analytics
-- Disease Statistics Dashboard
-- PDF Report Generation
+- Pharmacy
+- Billing
+- AI Reports
+- Disease Prediction
 
 ---
 
-## Database
+# 📦 Python Packages
 
-Database Name: hospital_db
-
-Database file: hospital_db.sql
-
----
-
-## Default Login
-
-Admin
-
-Username: admin
-
-Password: admin123
-
-Reception
-
-Username: reception
-
-Password: recep123
+- Flask
+- mysql-connector-python
+- google-generativeai
+- pandas
+- numpy
+- scikit-learn
+- joblib
+- matplotlib
+- reportlab
 
 ---
 
-## Developed By
+# 🚀 Future Improvements
 
-Dhiraj Bhamburkar
+- Email Notification
+- SMS Notification
+- Online Payment Gateway
+- Face Recognition Login
+- QR Code Patient ID
+- Multi Hospital Support
+- Cloud Deployment
+
+---
+
+# 👨‍💻 Developed By
+
+**Dhiraj Bhamburkar**
+
+---
+
+# ⭐ If you like this project
+
+Please consider giving this repository a ⭐ on GitHub.
