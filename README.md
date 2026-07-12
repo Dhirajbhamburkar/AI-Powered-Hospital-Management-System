@@ -397,7 +397,7 @@ recep123
 ![Doctor Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Doctor%20Management.png)
 
 ## 👨‍💼 Staff Management
-![Staff Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Login%20Page.png)
+![Staff Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Staff%20Management.png)
 
 ## 📅 Appointemt Management
 ![Appointemt Management](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/Appointment%20Management.png)
