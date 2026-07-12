@@ -373,7 +373,11 @@ recep123
 
 # 📸 Screenshots
 
-- Login Page
+## 🔐 Login Page
+![Login Page](screenshots/login.png)
+
+## 🏠 Dashboard
+![Dashboard](screenshots/dashboard.png)
 - Dashboard
 - Helth Risk Prediction
 - AI Disease Prediction
