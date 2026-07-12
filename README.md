@@ -374,7 +374,7 @@ recep123
 # 📸 Screenshots
 
 ## 🔐 Login Page
-![Login Page](screenshots/login.png)
+![Login Page]([screenshots/login.png](https://github.com/Dhirajbhamburkar/AI-Powered-Hospital-Management-System/blob/main/Screenshots/AI%20Chatbot.png))
 
 ## 🏠 Dashboard
 ![Dashboard](screenshots/dashboard.png)
